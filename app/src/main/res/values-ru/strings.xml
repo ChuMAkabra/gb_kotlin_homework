@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="push_me">Нажми на меня</string>
+    <string name="hello_world">Привет, Мир!</string>
+    <string name="button_pushed">Я что-то нажал, и все сломалось :)</string>
+</resources>

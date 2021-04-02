@@ -18,16 +18,14 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
 
     private var _binding : MainFragmentBinding? = null
+    // проксирующее свойство - создано, чтобы каждый раз в коде не использовать assert (_binding!!.)
     private val binding : MainFragmentBinding
         get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
-
-//        return _binding!!.root - думаю, что можно обойтись этой строчкой без создания binding
         return binding.root
-//        return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

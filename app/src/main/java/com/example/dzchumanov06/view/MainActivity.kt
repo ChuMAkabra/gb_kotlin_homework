@@ -1,8 +1,8 @@
-package com.example.dzchumanov06
+package com.example.dzchumanov06.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dzchumanov06.ui.main.MainFragment
+import com.example.dzchumanov06.R
 
 class MainActivity : AppCompatActivity() {
 

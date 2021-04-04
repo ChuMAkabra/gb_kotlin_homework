@@ -3,6 +3,7 @@ package com.example.dzchumanov06.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.dzchumanov06.model.Weather
 
 class MainViewModel(private val liveData : MutableLiveData<AppState> = MutableLiveData()) : ViewModel() {
 
@@ -15,7 +16,7 @@ class MainViewModel(private val liveData : MutableLiveData<AppState> = MutableLi
         liveData.value = AppState.Loading
         Thread {
             Thread.sleep(1000)
-            liveData.postValue(AppState.Success("something"))
+            liveData.postValue(AppState.Success(Weather()))
         }.start()
     }
 }

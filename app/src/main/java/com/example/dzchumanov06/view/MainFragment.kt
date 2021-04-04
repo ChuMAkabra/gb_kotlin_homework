@@ -45,7 +45,12 @@ class MainFragment : Fragment() {
     fun renderData(liveData: AppState) {
         binding.tvDetails.visibility = View.VISIBLE
         when(liveData) {
-            is AppState.Success -> binding.tvDetails.text = "Your data: ${liveData.weatherData}"
+            is AppState.Success -> {
+//                binding.tvDetails.text = "Your data: ${liveData.weatherData}"
+                binding.tvCity.text = "${liveData.weatherData.city.name}"
+                binding.tvDetails.text = "${liveData.weatherData.city.link}"
+                binding.tvTemp.text = "${liveData.weatherData.temp}"
+            }
             is AppState.Error   -> binding.tvDetails.text = "Error"
             AppState.Loading    -> binding.tvDetails.text = "Loading, please wait..."
         }

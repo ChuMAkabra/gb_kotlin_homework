@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.dzchumanov06.databinding.MainFragmentBinding
+import com.example.dzchumanov06.viewmodel.AppState
 import com.example.dzchumanov06.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -36,15 +37,19 @@ class MainFragment : Fragment() {
         // получим экземпляр нашей ViewModel, чтобы фрагмент мог на нее подписаться (вернее на ее LiveData)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // создаем Наблюдателя - вызывает события при обновлении данных в LiveData
-        val observer = Observer<Any> { renderData(it) }
+        val observer = Observer<AppState> { renderData(it) }
         // подписываемся на LiveData
         // viewLifecycleOwner - помогает следить за изменением состояния Activity или Fragment
         viewModel.getData().observe(viewLifecycleOwner, observer)
     }
 
     // обработка данных при их изменении
-    fun renderData(liveData: Any) {
-        Toast.makeText(context, "$liveData", Toast.LENGTH_LONG).show()
+    fun renderData(liveData: AppState) {
+        when(liveData) {
+            is AppState.Success -> binding.message.text = "Your data: ${liveData.weatherData}"
+            is AppState.Error   -> binding.message.text = "Error"
+            AppState.Loading    -> binding.message.text = "Loading, please wait..."
+        }
     }
 
     // во избежание утечек и нежелаемого поведения, обнулим _binding (в активити не нужно)

@@ -44,7 +44,7 @@ class MainFragment : Fragment() {
 
     // обработка данных при их изменении
     fun renderData(liveData: Any) {
-        Toast.makeText(context, "dummy data presented", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "$liveData", Toast.LENGTH_LONG).show()
     }
 
     // во избежание утечек и нежелаемого поведения, обнулим _binding (в активити не нужно)

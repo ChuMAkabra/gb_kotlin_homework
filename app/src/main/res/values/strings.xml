@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">dzChumanov06</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="details">Details</string>
 </resources>

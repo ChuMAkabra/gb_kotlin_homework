@@ -1,13 +1,16 @@
 package com.example.dzchumanov06.view
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dzchumanov06.R
@@ -40,9 +43,24 @@ class FragmentMain : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        binding.rvCity.adapter = adapter
+        // Эта установка служит для повышения производительности системы
+        // (все элементы будут иметь одинаковый размер, и не надо его пересчитывать)
+        binding.rvCity.setHasFixedSize(true)
+        // добавляем менеджер
         binding.rvCity.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        // добавляем декоратор
+        val decorator = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        /**
+         * нормально ли
+         * 1) так устанавливать drawable?
+         * 2) так обходить ситуацию, когда setDrawable принимает Drawable, а getDrawable возвращает Drawable? ?
+         */
+        ResourcesCompat.getDrawable(resources, R.drawable.separator, null)?.let {
+            decorator.setDrawable(it)
+        }
+        binding.rvCity.addItemDecoration(decorator)
+        //добавляем адаптер
+        binding.rvCity.adapter = adapter
 
         // получим экземпляр нашей ViewModel, чтобы фрагмент мог на нее подписаться (вернее на ее LiveData)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -63,8 +81,16 @@ class FragmentMain : Fragment() {
 //                Toast.makeText(context, "Ta-daaaa!", Toast.LENGTH_SHORT).show()
                 adapter.setWeather(liveData.weatherData)
             }
-            is AppState.Error -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
-            AppState.Loading -> Toast.makeText(context, getString(R.string.loading), Toast.LENGTH_SHORT).show()
+            is AppState.Error -> Toast.makeText(
+                context,
+                getString(R.string.error),
+                Toast.LENGTH_SHORT
+            ).show()
+            AppState.Loading -> Toast.makeText(
+                context,
+                getString(R.string.loading),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

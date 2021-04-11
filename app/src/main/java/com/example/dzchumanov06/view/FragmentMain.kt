@@ -109,8 +109,6 @@ class FragmentMain : Fragment() {
         }
     }
 
-
-
     // во избежание утечек и нежелаемого поведения, обнулим _binding (в активити не нужно)
     override fun onDestroy() {
         super.onDestroy()

@@ -1,10 +1,11 @@
 package com.example.dzchumanov06.model
 
+import android.os.Parcelable
 import com.example.dzchumanov06.R
+import kotlinx.android.parcel.Parcelize
 
-class Weather(val city: City = getDefaultCity(),
-              val temp : String = "7°C") {
-}
+@Parcelize class Weather(val city: City = getDefaultCity(),
+              val temp : String = "7°C"): Parcelable
 
 fun getDefaultCity() = City("Moscow", "pogoda.yandex.ru/moscow", R.drawable.moscow)
 

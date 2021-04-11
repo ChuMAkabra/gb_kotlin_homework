@@ -1,6 +1,5 @@
 package com.example.dzchumanov06.view
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dzchumanov06.R
 import com.example.dzchumanov06.databinding.FragmentMainBinding
+import com.example.dzchumanov06.model.Weather
 import com.example.dzchumanov06.viewmodel.AppState
 import com.example.dzchumanov06.viewmodel.MainViewModel
 
@@ -31,7 +31,22 @@ class FragmentMain : Fragment() {
     private val binding: FragmentMainBinding
         get() = _binding!!
 
-    private val adapter = FragmentMainAdapter()
+    private val adapter = FragmentMainAdapter(object : OnItemViewClickListener {
+        override fun onItemViewClick(weather: Weather) {
+            val manager = activity?.supportFragmentManager
+            val bundle = Bundle()
+            bundle.putParcelable(FragmentDetails.BUNDLE_EXTRA, weather)
+            if (manager != null) {
+                manager.beginTransaction()
+                    .replace(R.id.container, FragmentDetails.newInstance(bundle))
+                    .addToBackStack("")
+                    /**
+                     * действительно ли надо использовать здесь commitAllowingStateLoss?
+                     */
+                    .commitAllowingStateLoss()
+            }
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,10 +109,17 @@ class FragmentMain : Fragment() {
         }
     }
 
+
+
     // во избежание утечек и нежелаемого поведения, обнулим _binding (в активити не нужно)
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        adapter.removeListener()
+    }
+
+    interface OnItemViewClickListener {
+        fun onItemViewClick(weather: Weather)
     }
 
 }

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 //        setContentView(R.layout.main_activity)        // viewBinding успешно заменяет findViewById
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(binding.container.id, MainFragment.newInstance())
+                    .replace(binding.container.id, FragmentMain.newInstance())
                     .commit()
         }
     }

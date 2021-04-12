@@ -11,7 +11,9 @@ class MainViewModel(
 
     fun getLiveData() = liveData
 
-    fun getWeatherFromLocalSource() = getDataFromLocalSource()
+//    fun getWeatherFromLocalSource() = getDataFromLocalSource()
+
+    fun getWeatherFromLocalSourceAll() = getDataFromLocalSource()
 
 //    fun getWeatherFromRemoteSource()
 
@@ -19,7 +21,7 @@ class MainViewModel(
         liveData.value = AppState.Loading
         Thread {
             Thread.sleep(1000)
-            liveData.postValue(AppState.Success(repository.getWeatherFromLocalStorage()))
+            liveData.postValue(AppState.Success(repository.getWeatherFromLocalStorageAll()))
         }.start()
     }
 }

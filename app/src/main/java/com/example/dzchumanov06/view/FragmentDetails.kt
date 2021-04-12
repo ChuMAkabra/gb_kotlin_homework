@@ -1,6 +1,7 @@
 package com.example.dzchumanov06.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.dzchumanov06.R
 import com.example.dzchumanov06.databinding.FragmentDetailsBinding
 import com.example.dzchumanov06.model.Weather
+import com.google.android.material.snackbar.Snackbar
 
 class FragmentDetails : Fragment() {
 
@@ -42,6 +44,8 @@ class FragmentDetails : Fragment() {
 
         val weather = arguments?.getParcelable<Weather>(BUNDLE_EXTRA)
 
+
+
         if (weather != null) {
             binding.tvDetails.visibility = View.VISIBLE
             binding.tvTemp.text = weather.temp
@@ -56,7 +60,26 @@ class FragmentDetails : Fragment() {
                     )
                 )
             })
+
+            /**
+             * временный код для домашнего задания №4:
+             * вышаем клик-листенер на иконку - по нажатии:
+             * 1) ее внешний вид изменится
+             * 2) вызовется пользовательская extension-функция testSnackBar
+             */
+            with(binding.ivIcon) {
+                setOnClickListener {
+                    setImageResource(R.drawable.thunderstorm)
+                    testSnackBar("The icon has been changed", Snackbar.LENGTH_LONG, Color.RED)
+                }
+            }
+
         }
+    }
+
+    // экспериментальная extension-функция
+    private fun View.testSnackBar(text: String, duration: Int, color: Int) {
+        Snackbar.make(this, text, duration).setTextColor(color).show()
     }
 
     // во избежание утечек и нежелаемого поведения, обнулим _binding (в активити не нужно)
@@ -64,5 +87,4 @@ class FragmentDetails : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

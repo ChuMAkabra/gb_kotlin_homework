@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.dzchumanov06.R
 import com.example.dzchumanov06.databinding.FragmentDetailsBinding
-import com.example.dzchumanov06.model.Weather
+import com.example.dzchumanov06.model.WeatherManual
 import com.google.android.material.snackbar.Snackbar
 
 class FragmentDetails : Fragment() {
@@ -42,7 +42,7 @@ class FragmentDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val weather = arguments?.getParcelable<Weather>(BUNDLE_EXTRA)
+        val weather = arguments?.getParcelable<WeatherManual>(BUNDLE_EXTRA)
 
 
 

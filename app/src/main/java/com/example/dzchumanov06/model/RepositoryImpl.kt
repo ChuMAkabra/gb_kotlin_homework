@@ -1,13 +1,13 @@
 package com.example.dzchumanov06.model
 
 class RepositoryImpl: Repository {
-    override fun getWeatherFromLocalStorage(): Weather {
+    override fun getWeatherFromLocalStorage(): WeatherManual {
         // временно возвращаем значение по умолчанию
-        return Weather()
+        return WeatherManual()
 
     }
 
-    override fun getWeatherFromLocalStorageAll(): List<Weather> {
+    override fun getWeatherFromLocalStorageAll(): List<WeatherManual> {
         return getAllCities()
     }
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dzchumanov06.R
 import com.example.dzchumanov06.databinding.FragmentMainBinding
-import com.example.dzchumanov06.model.Weather
+import com.example.dzchumanov06.model.WeatherManual
 import com.example.dzchumanov06.viewmodel.AppState
 import com.example.dzchumanov06.viewmodel.MainViewModel
 
@@ -32,7 +32,7 @@ class FragmentMain : Fragment() {
         get() = _binding!!
 
     private val adapter = FragmentMainAdapter(object : OnItemViewClickListener {
-        override fun onItemViewClick(weather: Weather) {
+        override fun onItemViewClick(weather: WeatherManual) {
             val manager = activity?.supportFragmentManager
             val bundle = Bundle()
             bundle.putParcelable(FragmentDetails.BUNDLE_EXTRA, weather)
@@ -117,7 +117,7 @@ class FragmentMain : Fragment() {
     }
 
     interface OnItemViewClickListener {
-        fun onItemViewClick(weather: Weather)
+        fun onItemViewClick(weather: WeatherManual)
     }
 
 }

@@ -18,6 +18,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildTypes.each {
+        Properties properties = new Properties()
+        // выгружаем из файла все описанные в нем свойства
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        // для каждого типа билда (debug, release, ...) создать поле WEATHER_API_KEY объекта
+        // BuildConfig, которое будет доступно из любого места в приложении
+        def weatherApiKey = properties.getProperty("weather_api_key", "")
+        it.buildConfigField "String", "WEATHER_API_KEY", weatherApiKey
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,15 +48,24 @@ android {
 }
 
 dependencies {
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
 
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
+
+    // Design
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    // ViewModel and Livedata
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation 'junit:junit:4.+'
+
+    // Testing
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

@@ -23,8 +23,9 @@ import java.util.stream.Collectors
 import java.util.stream.Stream
 import javax.net.ssl.HttpsURLConnection
 
+private const val WEATHER_URL_DOMAIN = "https://api.openweathermap.org/data/2.5"
+
 class MainActivity : AppCompatActivity() {
-    private val WEATHER_URL_DOMAIN = "https://api.openweathermap.org/data/2.5"
 
     private lateinit var binding: MainActivityBinding
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 //TODO: загрузить данные для города (если такой имеется в базе)
-                loadWeather()
+                if (query != null) loadWeather(query)
 
                 return false
             }
@@ -71,11 +72,12 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun loadWeather() {
+    private fun loadWeather(cityName : String) {
         // генерируем строку запроса
-        val cityName = "Moscow"
-        val apiCall =
-            String.format("$WEATHER_URL_DOMAIN/weather?q=$cityName&units=metric&appid=${BuildConfig.WEATHER_API_KEY}")
+        val apiCall = String.format("$WEATHER_URL_DOMAIN/weather?" +
+                                    "q=$cityName" +
+                                    "&units=metric" +
+                                    "&appid=${BuildConfig.WEATHER_API_KEY}")
         // создаем хендлер, чтобы с его помощью обратиться к UI потоку
         val handler = Handler()
         try {
@@ -106,12 +108,17 @@ class MainActivity : AppCompatActivity() {
                     handler.post(Runnable {
                         Toast.makeText(
                             baseContext,
-                            "${weatherCurrent.weather[0].description}",
+                            "${weatherCurrent.name}: " +
+                                 "${weatherCurrent.main?.temp}°C, " +
+                                 "${weatherCurrent.weather[0].description}",
                             Toast.LENGTH_LONG
                         ).show()
                     })
                 } catch (e: Exception) {
                     Log.e("", "Something is wrong with connection")
+                    handler.post(Runnable {
+                        Toast.makeText(baseContext, "The city is not available in the database, or there is a connection issue", Toast.LENGTH_LONG).show()
+                    })
                     e.printStackTrace()
                 } finally {
                     connection.disconnect()
